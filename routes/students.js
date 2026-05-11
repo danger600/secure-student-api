@@ -15,6 +15,9 @@ const router = express.Router();
 // All student routes require authentication
 router.use(authenticate);
 
+// Search Students - must come BEFORE /:id route
+router.get('/search', searchStudents);
+
 // Create Student
 router.post('/', authorize(['admin', 'staff']), [
   body('firstName').notEmpty().withMessage('First name is required'),
@@ -31,9 +34,6 @@ router.post('/', authorize(['admin', 'staff']), [
 
 // Get All Students
 router.get('/', getAllStudents);
-
-// Search Students
-router.get('/search', searchStudents);
 
 // Get Student by ID
 router.get('/:id', getStudentById);
